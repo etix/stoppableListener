@@ -5,7 +5,7 @@ import (
 	"sync"
 )
 
-type stoppableListener struct {
+type StoppableListener struct {
 	net.Listener
 	Stop      chan bool
 	Stopped   bool
@@ -22,8 +22,8 @@ type counter struct {
 	c int
 }
 
-func Handle(l net.Listener) (sl *stoppableListener) {
-	sl = &stoppableListener{Listener: l, Stop: make(chan bool, 1)}
+func Handle(l net.Listener) (sl *StoppableListener) {
+	sl = &StoppableListener{Listener: l, Stop: make(chan bool, 1)}
 
 	// Start a goroutine that will wait until the stop channel
 	// receives a message then close the Listener to stop accepting
@@ -36,7 +36,7 @@ func Handle(l net.Listener) (sl *stoppableListener) {
 	return
 }
 
-func (sl *stoppableListener) Accept() (c net.Conn, err error) {
+func (sl *StoppableListener) Accept() (c net.Conn, err error) {
 	c, err = sl.Listener.Accept()
 	if err != nil {
 		return
