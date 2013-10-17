@@ -7,9 +7,9 @@ import (
 
 type StoppableListener struct {
 	net.Listener
-	Stop      chan bool
-	Stopped   bool
-	ConnCount counter
+	Stop      chan bool // Any message to this channel will gracefully stop the server
+	Stopped   bool      // True if the server was stopped gracefully
+	ConnCount counter   // Number of active client connections
 }
 
 type watchedConn struct {
